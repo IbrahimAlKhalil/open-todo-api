@@ -1,7 +1,10 @@
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigModule } from './config/config.module';
 import { Config } from './config/config.service';
+import { GraphQLModule } from '@nestjs/graphql';
 import { Module } from '@nestjs/common';
+
+const isDevEnv = process.env.NODE_ENV === 'development';
 
 @Module({
   imports: [
@@ -16,8 +19,15 @@ import { Module } from '@nestjs/common';
         };
       },
     }),
+    GraphQLModule.forRoot({
+      debug: isDevEnv,
+      playground: isDevEnv,
+      autoSchemaFile: true,
+      introspection: true,
+      installSubscriptionHandlers: true,
+      context: ({ req }) => ({ req }),
+    }),
   ],
-  controllers: [],
   providers: [],
 })
 export class AppModule {
