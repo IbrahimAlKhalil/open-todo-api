@@ -1,4 +1,5 @@
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { ConfigModule } from './config/config.module';
 import { Config } from './config/config.service';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -16,6 +17,7 @@ const isDevEnv = process.env.NODE_ENV === 'development';
           ...(config.db as TypeOrmModuleOptions),
           entities: ['dist/**/*.entity{.ts,.js}'],
           autoLoadEntities: true,
+          namingStrategy: new SnakeNamingStrategy(),
         };
       },
     }),
