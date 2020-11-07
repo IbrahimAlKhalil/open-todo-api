@@ -17,6 +17,7 @@ const isDevEnv = process.env.NODE_ENV === 'development';
           ...(config.db as TypeOrmModuleOptions),
           entities: ['dist/**/*.entity{.ts,.js}'],
           autoLoadEntities: true,
+          synchronize: isDevEnv,
           namingStrategy: new SnakeNamingStrategy(),
         };
       },
