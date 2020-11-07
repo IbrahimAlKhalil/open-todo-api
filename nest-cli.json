@@ -1,12 +1,4 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
-  "compilerOptions": {
-    "assets": [
-      {
-        "include": "../migrations/**/*.sql",
-        "outDir": "./dist/migrations"
-      }
-    ]
-  }
+  "sourceRoot": "src"
 }
