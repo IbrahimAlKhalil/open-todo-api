@@ -3,6 +3,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { ConfigModule } from './config/config.module';
 import { Config } from './config/config.service';
 import { GraphQLModule } from '@nestjs/graphql';
+import { MailModule } from './mail/mail.module';
 import { Module } from '@nestjs/common';
 
 const isDevEnv = process.env.NODE_ENV === 'development';
@@ -30,6 +31,7 @@ const isDevEnv = process.env.NODE_ENV === 'development';
       installSubscriptionHandlers: true,
       context: ({ req }) => ({ req }),
     }),
+    MailModule,
   ],
   providers: [],
 })
