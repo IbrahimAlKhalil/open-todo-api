@@ -4,6 +4,6 @@ import Mail from 'nodemailer/lib/mailer';
 
 @Injectable()
 export class MailService {
-  constructor(@Inject(MAIL_TRANSPORT) private transport: Mail) {
+  constructor(@Inject(MAIL_TRANSPORT) public transport: Mail) {
   }
 }
