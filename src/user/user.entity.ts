@@ -35,6 +35,6 @@ export class User {
   @Column({ type: 'timestamptz' })
   notificationSeenAt: string;
 
-  @Column({ type: 'timestamptz' })
+  @Column({ type: 'timestamptz', default: () => 'now()' })
   createdAt: string;
 }
