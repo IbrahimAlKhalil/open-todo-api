@@ -4,6 +4,7 @@ import { ConfigModule } from './config/config.module';
 import { Config } from './config/config.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MailModule } from './mail/mail.module';
+import { UserModule } from './user/user.module';
 import { Module } from '@nestjs/common';
 
 const isDevEnv = process.env.NODE_ENV === 'development';
@@ -32,6 +33,7 @@ const isDevEnv = process.env.NODE_ENV === 'development';
       context: ({ req }) => ({ req }),
     }),
     MailModule,
+    UserModule,
   ],
   providers: [],
 })
