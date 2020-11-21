@@ -1,6 +1,7 @@
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { ConfigModule } from './config/config.module';
+import { BcryptModule } from './bcrypt/bcrypt.module';
 import { Config } from './config/config.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MailModule } from './mail/mail.module';
@@ -33,6 +34,7 @@ const isDevEnv = process.env.NODE_ENV === 'development';
       installSubscriptionHandlers: true,
       context: ({ req }) => ({ req }),
     }),
+    BcryptModule,
     MailModule,
     UserModule,
   ],
