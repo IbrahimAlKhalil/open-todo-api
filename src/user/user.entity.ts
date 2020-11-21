@@ -18,7 +18,7 @@ export class User {
   lastName: string;
 
   @Column({ type: 'enum', enum: Gender })
-  gender: string;
+  gender: Gender;
 
   @Column({ unique: true })
   username: string;
