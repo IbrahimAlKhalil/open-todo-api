@@ -32,8 +32,8 @@ export class User {
   @Column({ nullable: true })
   invitationToken?: number | null;
 
-  @Column({ type: 'timestamptz' })
-  notificationSeenAt: string;
+  @Column({ type: 'timestamptz', default: () => 'now()' })
+  notificationSeenAt?: string;
 
   @Column({ type: 'timestamptz', default: () => 'now()' })
   createdAt: string;
