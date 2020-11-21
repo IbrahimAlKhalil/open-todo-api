@@ -29,8 +29,8 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
-  invitationToken: string;
+  @Column({ nullable: true })
+  invitationToken?: number | null;
 
   @Column({ type: 'timestamptz' })
   notificationSeenAt: string;
