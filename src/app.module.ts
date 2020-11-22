@@ -1,3 +1,4 @@
+import { RegistrationModule } from './registration/registration.module';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { ConfigModule } from './config/config.module';
@@ -34,6 +35,7 @@ const isDevEnv = process.env.NODE_ENV === 'development';
       installSubscriptionHandlers: true,
       context: ({ req }) => ({ req }),
     }),
+    RegistrationModule,
     BcryptModule,
     MailModule,
     UserModule,
