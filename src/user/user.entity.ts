@@ -1,10 +1,15 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { registerEnumType } from '@nestjs/graphql';
 
 export enum Gender {
   female = 'FEMALE',
   other = 'OTHER',
   male = 'MALE',
 }
+
+registerEnumType(Gender, {
+  name: 'Gender',
+});
 
 @Entity()
 export class User {
