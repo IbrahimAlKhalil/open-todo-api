@@ -1,6 +1,7 @@
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { HttpStatus, ValidationPipe } from '@nestjs/common';
+import * as cookieParser from 'cookie-parser';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as helmet from 'helmet';
@@ -36,6 +37,7 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.use(cookieParser());
 
   await app.listen(3000);
 }
