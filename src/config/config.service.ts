@@ -1,3 +1,4 @@
+import verification from './data/verification';
 import { Injectable } from '@nestjs/common';
 import mail from './data/mail';
 import app from './data/app';
@@ -9,4 +10,5 @@ export class Config {
   db = db();
   app = app();
   mail = mail();
+  verification = verification();
 }
