@@ -1,4 +1,5 @@
 import { RegistrationModule } from './registration/registration.module';
+import { VerificationModule } from './verification/verification.module';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { ConfigModule } from './config/config.module';
@@ -39,6 +40,7 @@ const isDevEnv = process.env.NODE_ENV === 'development';
     BcryptModule,
     MailModule,
     UserModule,
+    VerificationModule,
   ],
   providers: [],
 })
