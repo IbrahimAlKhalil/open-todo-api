@@ -23,6 +23,7 @@ import { Module } from '@nestjs/common';
     },
     MailService,
   ],
+  exports: [MailService],
 })
 export class MailModule {
 }
