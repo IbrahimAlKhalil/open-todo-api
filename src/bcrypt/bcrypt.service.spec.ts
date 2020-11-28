@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BcryptService } from './bcrypt.service';
+import { mocked } from 'ts-jest/utils';
 import * as bcrypt from 'bcryptjs';
-import { mocked } from 'ts-jest';
 
 describe('BcryptService', () => {
   let service: BcryptService;
