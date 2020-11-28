@@ -1,6 +1,6 @@
 FROM node:14.15-alpine AS builder
 
-WORKDIR usr/src/app
+WORKDIR /usr/src/app
 
 COPY . .
 
@@ -10,7 +10,7 @@ RUN npm prune --production
 
 FROM node:14.15-alpine
 
-WORKDIR usr/src/app
+WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app .
 
