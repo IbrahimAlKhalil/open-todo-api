@@ -36,7 +36,7 @@ describe('UserService', () => {
     );
   });
 
-  describe('.createUser()', () => {
+  describe('.create()', () => {
     it('should use Transactional Entity Manager if given', async () => {
       const trxRepo = {
         save: jest.fn(),
@@ -49,13 +49,13 @@ describe('UserService', () => {
         },
       };
 
-      await service.createUser(data, entityManager as unknown as EntityManager);
+      await service.create(data, entityManager as unknown as EntityManager);
 
       expect(trxRepo.save).toBeCalledWith(data);
     });
 
     it('should create user', async () => {
-      await service.createUser(data);
+      await service.create(data);
 
       expect(userRepo.save).toBeCalledWith(data);
     });

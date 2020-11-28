@@ -8,7 +8,7 @@ export class UserService {
   constructor(@InjectRepository(User) private userRepo: Repository<User>) {
   }
 
-  createUser(data: Pick<User, 'firstName' | 'lastName' | 'gender' | 'username' | 'email' | 'password'>, entityManager?: EntityManager): Promise<User> {
+  create(data: Pick<User, 'firstName' | 'lastName' | 'gender' | 'username' | 'email' | 'password'>, entityManager?: EntityManager): Promise<User> {
     const repository = entityManager?.getRepository(User) || this.userRepo;
 
     return repository.save(
