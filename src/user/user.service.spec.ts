@@ -25,6 +25,7 @@ describe('UserService', () => {
           useValue: {
             create: jest.fn(() => data),
             save: jest.fn(),
+            findOne: jest.fn(() => Promise.resolve(data)),
           },
         },
       ],
@@ -58,6 +59,27 @@ describe('UserService', () => {
       await service.create(data);
 
       expect(userRepo.save).toBeCalledWith(data);
+    });
+  });
+
+  describe('.findOne()', () => {
+    it('should find the user by email', async () => {
+      await service.findOne(data.email);
+
+      expect(userRepo.findOne).toBeCalledWith({
+        where: {
+          email: data.email,
+        },
+      });
+    });
+
+    it('should find the user by id', async () => {
+      const id = 1;
+      await service.findOne(id);
+
+      expect(userRepo.findOne).toBeCalledWith({
+        where: { id },
+      });
     });
   });
 });

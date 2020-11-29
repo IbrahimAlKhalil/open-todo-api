@@ -15,4 +15,14 @@ export class UserService {
       repository.create(data),
     );
   }
+
+  findOne(identity: string | number): Promise<User> {
+    const findBy = typeof identity === 'number' ? 'id' : 'email';
+
+    return this.userRepo.findOne({
+      where: {
+        [findBy]: identity,
+      },
+    });
+  }
 }
