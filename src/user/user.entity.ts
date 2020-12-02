@@ -31,6 +31,9 @@ export class User {
   @Column({ unique: true })
   email: string;
 
+  @Column({ default: false })
+  verified: boolean;
+
   @Column()
   password: string;
 
