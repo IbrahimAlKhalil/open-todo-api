@@ -1,3 +1,4 @@
+import { VerificationModule } from '../verification/verification.module';
 import { BcryptModule } from '../bcrypt/bcrypt.module';
 import { UserSubscriber } from './user.subscriber';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,6 +9,7 @@ import { User } from './user.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
+    VerificationModule,
     BcryptModule,
   ],
   providers: [UserService, UserSubscriber],

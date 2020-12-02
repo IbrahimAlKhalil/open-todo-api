@@ -1,10 +1,12 @@
 import { Connection, EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent } from 'typeorm';
+import { VerificationService } from '../verification/verification.service';
 import { BcryptService } from '../bcrypt/bcrypt.service';
 import { User } from './user.entity';
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface<User> {
   constructor(
+    private readonly verificationService: VerificationService,
     private readonly bcryptService: BcryptService,
     private readonly connection: Connection,
   ) {
@@ -27,5 +29,9 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
     if (entity.password !== databaseEntity?.password) {
       await this.hashPassword(entity);
     }
+  }
+
+  async afterInsert({ entity }: InsertEvent<User>): Promise<void> {
+    await this.verificationService.send(entity);
   }
 }

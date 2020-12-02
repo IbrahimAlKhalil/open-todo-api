@@ -1,3 +1,4 @@
+import { VerificationService } from '../verification/verification.service';
 import { Connection, InsertEvent, UpdateEvent } from 'typeorm';
 import { BcryptService } from '../bcrypt/bcrypt.service';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -5,7 +6,9 @@ import { UserSubscriber } from './user.subscriber';
 import { Gender, User } from './user.entity';
 
 describe('UserSubscriber', () => {
+  let verificationService: VerificationService;
   let subscriber: UserSubscriber;
+
   const entity = {
     firstName: 'Ibrahim',
     lastName: 'Al Khalil',
@@ -32,9 +35,16 @@ describe('UserSubscriber', () => {
             hash: jest.fn(() => Promise.resolve(hash)),
           },
         },
+        {
+          provide: VerificationService,
+          useValue: {
+            send: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
+    verificationService = module.get(VerificationService);
     subscriber = module.get(UserSubscriber);
   });
 
@@ -72,6 +82,14 @@ describe('UserSubscriber', () => {
 
         // Password did not change
         expect(entity.password).toEqual(hash);
+      });
+    });
+
+    describe('.afterInsert()', () => {
+      it('should call the send method of VerificationService with newly inserted user', async () => {
+        await subscriber.afterInsert({ entity } as InsertEvent<User>);
+
+        expect(verificationService.send).toBeCalledWith(entity);
       });
     });
   });
