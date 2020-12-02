@@ -1,9 +1,10 @@
 import { VerificationService } from './verification.service';
+import { MailModule } from '../mail/mail.module';
 import { JwtModule } from '../jwt/jwt.module';
 import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [JwtModule],
+  imports: [JwtModule, MailModule],
   providers: [VerificationService],
   exports: [VerificationService],
 })
