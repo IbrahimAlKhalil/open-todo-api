@@ -39,7 +39,7 @@ describe('UserService', () => {
   });
 
   describe('.create()', () => {
-    it('should use Transactional Entity Manager if given', async () => {
+    it('should use given entity manager', async () => {
       const trxRepo = {
         save: jest.fn(),
         create: jest.fn(() => data),
