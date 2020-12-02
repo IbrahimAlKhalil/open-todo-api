@@ -1,4 +1,4 @@
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager, Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
@@ -24,5 +24,15 @@ export class UserService {
         [findBy]: identity,
       },
     });
+  }
+
+  update(
+    criteria: User | number | number[],
+    data: Partial<User>,
+    entityManager?: EntityManager,
+  ): Promise<UpdateResult> {
+    const repository = entityManager?.getRepository(User) || this.userRepo;
+
+    return repository.update(criteria, data);
   }
 }

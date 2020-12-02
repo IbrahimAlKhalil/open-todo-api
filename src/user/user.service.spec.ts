@@ -26,6 +26,7 @@ describe('UserService', () => {
             create: jest.fn(() => data),
             save: jest.fn(),
             findOne: jest.fn(() => Promise.resolve(data)),
+            update: jest.fn(),
           },
         },
       ],
@@ -80,6 +81,31 @@ describe('UserService', () => {
       expect(userRepo.findOne).toBeCalledWith({
         where: { id },
       });
+    });
+  });
+
+  describe('.update()', () => {
+    const data = { firstName: 'Ibrahim Al Khalil' };
+    const id = 1;
+
+    it('should use given entity manager', async () => {
+      const trxRepo = {
+        update: jest.fn(),
+      };
+
+      const entityManager = {
+        getRepository() {
+          return trxRepo;
+        },
+      };
+
+      await service.update(id, data, entityManager as unknown as EntityManager);
+      expect(trxRepo.update).toBeCalled();
+    });
+
+    it('should update user', async () => {
+      await service.update(id, data);
+      expect(userRepo.update).toBeCalledWith(id, data);
     });
   });
 });
