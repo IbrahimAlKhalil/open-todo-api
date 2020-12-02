@@ -7,15 +7,15 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class VerificationService {
-  private jwtAudience = 'Verification Module';
-  private jwtSubject = 'email-verification';
-
   constructor(
     private readonly mailService: MailService,
     private readonly jwtService: JwtService,
     private readonly config: Config,
   ) {
   }
+
+  private jwtAudience = 'Verification Module';
+  private jwtSubject = 'email-verification';
 
   private generateToken(email: string, userId: number): Promise<string> {
     return this.jwtService.signAsync(
@@ -26,6 +26,15 @@ export class VerificationService {
         subject: this.jwtSubject,
       },
     );
+  }
+
+  private getVerificationUrl(token: string): string {
+    const url = new URL(this.config.app.clientURL);
+
+    url.pathname = 'verification';
+    url.searchParams.append('token', token);
+
+    return url.toString();
   }
 
   async send(email: string, user: User): Promise<any> {
@@ -40,14 +49,5 @@ export class VerificationService {
         this.config.app.logo,
       ),
     });
-  }
-
-  private getVerificationUrl(token: string): string {
-    const url = new URL(this.config.app.clientURL);
-
-    url.pathname = 'verification';
-    url.searchParams.append('token', token);
-
-    return url.toString();
   }
 }

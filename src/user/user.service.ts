@@ -19,16 +19,6 @@ export class UserService {
     );
   }
 
-  findOne(identity: string | number): Promise<User> {
-    const findBy = typeof identity === 'number' ? 'id' : 'email';
-
-    return this.userRepo.findOne({
-      where: {
-        [findBy]: identity,
-      },
-    });
-  }
-
   update(
     criteria: User | number | number[],
     data: Partial<User>,
@@ -37,5 +27,15 @@ export class UserService {
     const repository = entityManager?.getRepository(User) || this.userRepo;
 
     return repository.update(criteria, data);
+  }
+
+  findOne(identity: string | number): Promise<User> {
+    const findBy = typeof identity === 'number' ? 'id' : 'email';
+
+    return this.userRepo.findOne({
+      where: {
+        [findBy]: identity,
+      },
+    });
   }
 }

@@ -7,8 +7,8 @@ import db from './data/db';
 @Injectable()
 export class Config {
   // Configuration data goes here
-  db = db();
-  app = app();
-  mail = mail();
   verification = verification();
+  mail = mail();
+  app = app();
+  db = db();
 }
