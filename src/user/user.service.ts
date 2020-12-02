@@ -12,7 +12,7 @@ export class UserService {
     data: Pick<User, 'firstName' | 'lastName' | 'gender' | 'username' | 'email' | 'password'>,
     entityManager?: EntityManager,
   ): Promise<User> {
-    const repository = entityManager?.getRepository(User) || this.userRepo;
+    const repository = entityManager?.getRepository(User) ?? this.userRepo;
 
     return repository.save(
       repository.create(data),
@@ -24,7 +24,7 @@ export class UserService {
     data: Partial<User>,
     entityManager?: EntityManager,
   ): Promise<UpdateResult> {
-    const repository = entityManager?.getRepository(User) || this.userRepo;
+    const repository = entityManager?.getRepository(User) ?? this.userRepo;
 
     return repository.update(criteria, data);
   }
