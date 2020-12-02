@@ -62,7 +62,15 @@ describe('VerificationService', () => {
 
   describe('.send()', () => {
     it('should send a mail to given address', async () => {
-      await service.send(email, { id: userId } as any);
+      await service.send({ id: userId } as any, email);
+
+      expect(
+        mocked(mailService.send).mock.calls[0][0].to,
+      ).toBe(email);
+    });
+
+    it('should send a mail to the user\'s email address', async () => {
+      await service.send({ id: userId, email } as any);
 
       expect(
         mocked(mailService.send).mock.calls[0][0].to,

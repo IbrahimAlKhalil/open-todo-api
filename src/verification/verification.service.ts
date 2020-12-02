@@ -27,12 +27,12 @@ export class VerificationService {
     return url.toString();
   }
 
-  async send(email: string, user: User): Promise<any> {
+  async send(user: User, email?: string): Promise<any> {
     const token = await this.generateToken(email, user.id);
 
     return await this.mailService.send({
       subject: this.config.verification.subject,
-      to: email,
+      to: email ?? user.email,
       from: this.config.verification.from,
       html: verificationTemplate(
         this.getVerificationUrl(token),
