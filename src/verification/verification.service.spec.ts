@@ -6,9 +6,6 @@ import { JwtService } from '@nestjs/jwt';
 import { mocked } from 'ts-jest/utils';
 
 describe('VerificationService', () => {
-  const config = {
-    tokenLifetime: '1h',
-  };
   const email = 'mail@host';
   const userId = 1;
 
@@ -23,7 +20,7 @@ describe('VerificationService', () => {
         {
           provide: Config,
           useValue: {
-            verification: config,
+            verification: {},
             app: {
               clientURL: 'http://opentodo',
               logo: 'http://opentodo/logo.png',
@@ -60,16 +57,6 @@ describe('VerificationService', () => {
       expect(
         mocked(jwtService.signAsync).mock.calls[0][0],
       ).toStrictEqual({ email, userId });
-    });
-
-    it('should use Expiration Time, Audience and Subject to sign the token', async () => {
-      expect(
-        mocked(jwtService.signAsync).mock.calls[0][1],
-      ).toStrictEqual({
-        expiresIn: config.tokenLifetime,
-        audience: (service as any).jwtAudience,
-        subject: (service as any).jwtSubject,
-      });
     });
   });
 
