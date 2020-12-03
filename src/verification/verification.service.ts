@@ -1,5 +1,6 @@
 import verificationTemplate from './verification.template';
 import { MailService } from '../mail/mail.service';
+import { UserService } from '../user/user.service';
 import { Config } from '../config/config.service';
 import { Injectable } from '@nestjs/common';
 import { User } from '../user/user.entity';
@@ -9,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 export class VerificationService {
   constructor(
     private readonly mailService: MailService,
+    private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly config: Config,
   ) {
@@ -40,4 +42,46 @@ export class VerificationService {
       ),
     });
   }
+
+  async verify(token: string): Promise<boolean> {
+    let payload: JwtPayload;
+
+    try {
+      payload = await this.jwtService.verifyAsync<JwtPayload>(token);
+    } catch (e) {
+      return false;
+    }
+
+    // Since the email column is indexed, an attacker can abuse a non-expired jwt
+    // and perform a DDoS attack on the user table, so it'll be wise to load the user
+    // and check if the email has really changed before performing update
+
+    const user = await this.userService.findOne(payload.userId);
+
+    // It's possible that a user has deleted his/her account after  using this token,
+    // and the token is still valid,
+    // in that case we don't have the user in the database to update the email address
+
+    if (!user || (user.email === payload.email && user.verified)) {
+      return false;
+    }
+
+    const userData: Partial<User> = {
+      email: payload.email,
+    };
+
+    // Set verified to true if it's not
+    if (!user.verified) {
+      userData.verified = true;
+    }
+
+    await this.userService.update(payload.userId, userData);
+
+    return true;
+  }
+}
+
+interface JwtPayload {
+  userId: number;
+  email: string;
 }

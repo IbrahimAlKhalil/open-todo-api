@@ -1,7 +1,8 @@
 import { VerificationService } from './verification.service';
+import { forwardRef, Module } from '@nestjs/common';
 import { Config } from '../config/config.service';
 import { MailModule } from '../mail/mail.module';
-import { Module } from '@nestjs/common';
+import { UserModule } from '../user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
@@ -24,6 +25,7 @@ import { JwtModule } from '@nestjs/jwt';
       },
       inject: [Config],
     }),
+    forwardRef(() => UserModule),
     MailModule,
   ],
   providers: [VerificationService],
