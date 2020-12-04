@@ -1,3 +1,4 @@
+import { VerificationResolver } from './verification.resolver';
 import { VerificationService } from './verification.service';
 import { forwardRef, Module } from '@nestjs/common';
 import { Config } from '../config/config.service';
@@ -28,7 +29,7 @@ import { JwtModule } from '@nestjs/jwt';
     forwardRef(() => UserModule),
     MailModule,
   ],
-  providers: [VerificationService],
+  providers: [VerificationService, VerificationResolver],
   exports: [VerificationService],
 })
 export class VerificationModule {
