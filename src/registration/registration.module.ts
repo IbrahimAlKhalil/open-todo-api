@@ -1,3 +1,4 @@
+import { RegistrationResolver } from './registration.resolver';
 import { UserModule } from '../user/user.module';
 import { Module } from '@nestjs/common';
 
@@ -5,7 +6,7 @@ import { Module } from '@nestjs/common';
   imports: [
     UserModule,
   ],
-  providers: [],
+  providers: [RegistrationResolver],
 })
 export class RegistrationModule {
 }
