@@ -1,5 +1,5 @@
 import { Config } from '../config/config.service';
-import { MAIL_TRANSPORT } from '../constants';
+import { MAIL_TRANSPORT } from './constants';
 import { createTransport } from 'nodemailer';
 import { MailService } from './mail.service';
 import { Module } from '@nestjs/common';

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { MAIL_TRANSPORT } from '../constants';
+import { MAIL_TRANSPORT } from './constants';
 import { SentMessageInfo } from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 
