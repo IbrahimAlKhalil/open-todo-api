@@ -26,7 +26,6 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
       disableErrorMessages: process.env.NODE_ENV === 'production',
       errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
       transform: true,
