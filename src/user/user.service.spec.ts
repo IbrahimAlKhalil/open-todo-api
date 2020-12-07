@@ -63,27 +63,6 @@ describe('UserService', () => {
     });
   });
 
-  describe('.findOne()', () => {
-    it('should find the user by email', async () => {
-      await service.findOne(data.email);
-
-      expect(userRepo.findOne).toBeCalledWith({
-        where: {
-          email: data.email,
-        },
-      });
-    });
-
-    it('should find the user by id', async () => {
-      const id = 1;
-      await service.findOne(id);
-
-      expect(userRepo.findOne).toBeCalledWith({
-        where: { id },
-      });
-    });
-  });
-
   describe('.update()', () => {
     const data = { firstName: 'Ibrahim Al Khalil' };
     const id = 1;
