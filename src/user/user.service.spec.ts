@@ -108,4 +108,24 @@ describe('UserService', () => {
       expect(userRepo.update).toBeCalledWith(id, data);
     });
   });
+
+  describe('static .getIdentityColumnNameByValue()', () => {
+    it('should return email', async () => {
+      expect(
+        (UserService as any).getIdentityColumnNameByValue(data.email),
+      ).toBe('email');
+    });
+
+    it('should return id', async () => {
+      expect(
+        (UserService as any).getIdentityColumnNameByValue(1),
+      ).toBe('id');
+    });
+
+    it('should return username', async () => {
+      expect(
+        (UserService as any).getIdentityColumnNameByValue('IbrahimAlKhalil'),
+      ).toBe('username');
+    });
+  });
 });

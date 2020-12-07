@@ -1,11 +1,16 @@
 import { EntityManager, Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
+import { isEmail } from 'class-validator';
 import { User } from './user.entity';
 
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(User) private userRepo: Repository<User>) {
+  }
+
+  private static getIdentityColumnNameByValue(value: number | string) {
+    return typeof value === 'number' ? 'id' : isEmail(value) ? 'email' : 'username';
   }
 
   create(
@@ -30,12 +35,21 @@ export class UserService {
   }
 
   findOne(identity: string | number): Promise<User> {
-    const findBy = typeof identity === 'number' ? 'id' : 'email';
-
     return this.userRepo.findOne({
       where: {
-        [findBy]: identity,
+        [UserService.getIdentityColumnNameByValue(identity)]: identity,
       },
     });
+  }
+
+  async userExists(identity: string | number): Promise<boolean> {
+    return !!(
+      await this.userRepo.findOne({
+        where: {
+          [UserService.getIdentityColumnNameByValue(identity)]: identity,
+        },
+        select: ['id'],
+      })
+    );
   }
 }
