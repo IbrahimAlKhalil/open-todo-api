@@ -2,6 +2,7 @@ import { VerificationModule } from '../verification/verification.module';
 import { BcryptModule } from '../bcrypt/bcrypt.module';
 import { UserSubscriber } from './user.subscriber';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
 import { Module } from '@nestjs/common';
 import { User } from './user.entity';
@@ -12,7 +13,7 @@ import { User } from './user.entity';
     VerificationModule,
     BcryptModule,
   ],
-  providers: [UserService, UserSubscriber],
+  providers: [UserService, UserSubscriber, UserResolver],
   exports: [UserService],
 })
 export class UserModule {
